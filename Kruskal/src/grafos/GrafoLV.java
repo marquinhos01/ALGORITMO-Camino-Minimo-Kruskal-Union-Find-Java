@@ -38,7 +38,7 @@ public class GrafoLV {
 	public boolean existeArista(int i, int j) {
 		verificarArista(i, j, "consultar");
 
-		return _vecinos.get(i).contains(new Arista(i,j,0));
+		return _vecinos.get(i).contains(new Arista(i, j, 0));
 	}
 
 	public Set<Integer> vecinos(int i) {
@@ -101,6 +101,7 @@ public class GrafoLV {
 
 		return true;
 	}
+
 	public static void main(String[] args) {
 		GrafoLV g = new GrafoLV(5);
 		g.agregarArista(0, 1, 5);

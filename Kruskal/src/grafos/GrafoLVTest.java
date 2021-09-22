@@ -23,11 +23,17 @@ public class GrafoLVTest {
 		g.agregarArista(1, 2, 0);
 		assertTrue(g.existeArista(1, 2));
 		assertTrue(g.existeArista(2, 1));
+		assertFalse(g.existeArista(2, 0));
 	}
 	@Test
-	public void grafoVacioTest() {
+	public void grafoVacioSinVerticeTest() {
 		GrafoLV g = new GrafoLV(0);
 		assertEquals(0, g.vertices());
+	}
+	@Test
+	public void VerticesTest() {
+		GrafoLV g = inicializarGrafo();
+		assertEquals(5, g.vertices());
 	}
 	@Test
 	public void vecinosTest() {
