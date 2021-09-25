@@ -71,13 +71,14 @@ public class GrafoAdy {
 		if (i >= A.length)
 			throw new IllegalArgumentException("Los vertices deben estar entre 0 y |v|-1!");
 	}
-
-	public static void main(String[] args) {
-		GrafoAdy grafo = new GrafoAdy(5);
-		grafo.agregarArista(2, 3);
-		grafo.agregarArista(2, 4);
-		System.out.println(grafo.existeArista(2, 3));
-		System.out.println(grafo.existeArista(3, 2));
-		System.out.println(grafo.existeArista(1, 3));
-	}
+	
+//	QUITAR
+//	public static void main(String[] args) {
+//		GrafoAdy grafo = new GrafoAdy(5);
+//		grafo.agregarArista(2, 3);
+//		grafo.agregarArista(2, 4);
+//		System.out.println(grafo.existeArista(2, 3));
+//		System.out.println(grafo.existeArista(3, 2));
+//		System.out.println(grafo.existeArista(1, 3));
+//	}
 }

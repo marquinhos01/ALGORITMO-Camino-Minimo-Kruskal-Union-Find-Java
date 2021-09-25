@@ -74,13 +74,21 @@ public class GrafoLV {
 		return _vertice;
 	}
 
-	public int getPesoArista(int i, int j) {
+	public int getPesoArista(int Vertice1, int Vertice2) {
 		// arraylist no obtiene por objeto, si no por indice
-		for (int k = 0; k < _vecinos.get(i).size(); k++) { // obtengo el vertice i
-			if (_vecinos.get(i).get(k).equals(new Arista(i, j, 0)))
-				return _vecinos.get(i).get(k).getPeso();
+		for (int k = 0; k < _vecinos.get(Vertice1).size(); k++) { // obtengo el vertice i
+			if (_vecinos.get(Vertice1).get(k).equals(new Arista(Vertice1, Vertice2, 0)))
+				return _vecinos.get(Vertice1).get(k).getPeso();
 		}
 		return -1;
+	}
+	
+	public ArrayList<ArrayList<Arista>> getVecinos() {
+		return _vecinos;
+	}
+
+	public void set_vecinos(ArrayList<ArrayList<Arista>> _vecinos) {
+		this._vecinos = _vecinos;
 	}
 
 	public boolean esClique(Set<Integer> conjunto) {
@@ -101,16 +109,18 @@ public class GrafoLV {
 
 		return true;
 	}
-
-	public static void main(String[] args) {
-		GrafoLV g = new GrafoLV(5);
-		g.agregarArista(0, 1, 5);
-		g.agregarArista(0, 2, 4);
-		g.agregarArista(3, 1, 4);
-		g.agregarArista(3, 2, 4);
-		g.eliminarArista(1, 3);
-		System.out.println(g.grado(1));
-
-	}
+	
+	
+//	QUITAR
+//	public static void main(String[] args) {
+//		GrafoLV g = new GrafoLV(5);
+//		g.agregarArista(0, 1, 5);
+//		g.agregarArista(0, 2, 4);
+//		g.agregarArista(3, 1, 4);
+//		g.agregarArista(3, 2, 4);
+//		g.eliminarArista(1, 3);
+//		System.out.println(g.grado(1));
+//
+//	}
 
 }
