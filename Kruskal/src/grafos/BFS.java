@@ -1,7 +1,9 @@
 package grafos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class BFS {
@@ -32,11 +34,17 @@ public class BFS {
 
 		return ret;
 	}
-
+	
 	private static void agregarVecinosPendientes(GrafoLV g, int i) {
-		for (int vertice : g.vecinos(i))
-			if (marcados[vertice] == false && L.contains(vertice) == false)
-				L.add(vertice); //lo agrego a L
+		Iterator <HashMap.Entry<Integer, Double>> iterador = g.vecinos(i).entrySet().iterator();
+		while(iterador.hasNext()) {
+			HashMap.Entry<Integer, Double> vecinoActual = iterador.next();
+			if (marcados[vecinoActual.getKey()] == false && L.contains(vecinoActual.getKey()) == false)
+				L.add(vecinoActual.getKey());
+		}
+//		for (int vertice : g.vecinos(i))
+//			if (marcados[vertice] == false && L.contains(vertice) == false)
+//				L.add(vertice); //lo agrego a L
 	}
 
 	private static void inicializar(GrafoLV g, int origen) {

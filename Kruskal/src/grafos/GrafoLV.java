@@ -89,6 +89,13 @@ public class GrafoLV {
 		return -1;
 	}
 	
+	//para acceder desde KruskalBFS al map con vecinos de un vértice determinado
+	
+	public HashMap<Integer, Double> susVecinos(int vertice){
+		this.verificarVertice(vertice, " un vértice"); //preguntar para qué está el tipo
+		return _vecinos.get(vertice);
+	}
+	
 	public ArrayList<HashMap<Integer, Double>> getVecinos() {
 		return _vecinos;
 	}

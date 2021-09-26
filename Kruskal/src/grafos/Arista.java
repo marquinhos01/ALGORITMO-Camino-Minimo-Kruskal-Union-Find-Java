@@ -3,9 +3,10 @@ package grafos;
 import java.util.Objects;
 
 public class Arista {
-	private int i, j, peso;
+	private int i, j;
+	private double peso;
 
-	public Arista(int i, int j, int p) {
+	public Arista(int i, int j, double p) {
 		this.i = i;
 		this.j = j;
 		this.peso = p;
@@ -19,7 +20,7 @@ public class Arista {
 		return j;
 	}
 
-	public int getPeso() {
+	public double getPeso() {
 		return peso;
 	}
 
