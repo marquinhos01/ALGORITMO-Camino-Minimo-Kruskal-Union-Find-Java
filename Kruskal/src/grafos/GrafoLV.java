@@ -1,54 +1,63 @@
 package grafos;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
 
 /*
   Representacin con Lista de vecinos
 */
 public class GrafoLV {
-	private ArrayList<ArrayList<Arista>> _vecinos;
+	private ArrayList<HashMap <Integer, Double > > _vecinos; //la carga va de 0 a 1 con distribución uniforme
 	private int _vertice;
 
 	public GrafoLV(int vertices) {
-		_vecinos = new ArrayList<ArrayList<Arista>>(vertices);
+		_vecinos = new ArrayList<HashMap <Integer, Double> >(vertices);
 
 		for (int i = 0; i < vertices; i++)
-			_vecinos.add(new ArrayList<Arista>());
+			_vecinos.add(new HashMap <Integer, Double>());
 
 		_vertice = vertices;
 	}
 
-	public void agregarArista(int i, int j, int p) {
+	public void agregarArista(int i, int j, double p) {
 		verificarArista(i, j, "agregar");
 
-		_vecinos.get(i).add(new Arista(i, j, p));
-		_vecinos.get(j).add(new Arista(j, i, p));
+		if (!_vecinos.get(i).containsKey(j) && !_vecinos.get(j).containsKey(i)) {
+			_vecinos.get(i).put(j, p);
+			_vecinos.get(j).put(i, p);
+		}
+		
 	}
 
 	public void eliminarArista(int i, int j) {
 		verificarArista(i, j, "eliminar");
 
-		_vecinos.get(i).remove(new Arista(i, j, 0));
-		_vecinos.get(j).remove(new Arista(j, i, 0));
-
+		if (_vecinos.get(i).containsKey(j) && _vecinos.get(j).containsKey(i)) {
+			_vecinos.get(i).remove(j);
+			_vecinos.get(j).remove(i);
+		}
 	}
 
+	public void modificarCarga(int i, int j, double p) {
+		if(_vecinos.get(i).get(j)== null)
+			throw new IllegalArgumentException("La arista ingresada no existe");
+		if (_vecinos.get(i).containsKey(j) && _vecinos.get(j).containsKey(i) && _vecinos.get(i).get(j)!= null) {
+			_vecinos.get(i).replace(j, p);
+			_vecinos.get(j).replace(i, p);
+		}
+	}
+	
 	public boolean existeArista(int i, int j) {
 		verificarArista(i, j, "consultar");
-
-		return _vecinos.get(i).contains(new Arista(i, j, 0));
+		return _vecinos.get(i).containsKey(j);
 	}
-
-	public Set<Integer> vecinos(int i) {
-		Set<Integer> vecinos = new HashSet<Integer>();
+	
+	public HashMap <Integer, Double> vecinos(int i)
+	{
 		verificarVertice(i, " un vertice ");
-		for (int j = 0; j < _vecinos.get(i).size(); j++) {
-			vecinos.add(_vecinos.get(i).get(j).getJ());
-		}
-
-		return vecinos;
+		
+		return _vecinos.get(i);
 	}
 
 	public int grado(int i) {
@@ -73,21 +82,18 @@ public class GrafoLV {
 	public int vertices() {
 		return _vertice;
 	}
-
-	public int getPesoArista(int Vertice1, int Vertice2) {
-		// arraylist no obtiene por objeto, si no por indice
-		for (int k = 0; k < _vecinos.get(Vertice1).size(); k++) { // obtengo el vertice i
-			if (_vecinos.get(Vertice1).get(k).equals(new Arista(Vertice1, Vertice2, 0)))
-				return _vecinos.get(Vertice1).get(k).getPeso();
-		}
+	
+	public double getPesoArista(int vertice1, int vertice2) {
+		if (_vecinos.get(vertice1).containsKey(vertice2))
+			return _vecinos.get(vertice1).get(vertice2).doubleValue();
 		return -1;
 	}
 	
-	public ArrayList<ArrayList<Arista>> getVecinos() {
+	public ArrayList<HashMap<Integer, Double>> getVecinos() {
 		return _vecinos;
 	}
-
-	public void set_vecinos(ArrayList<ArrayList<Arista>> _vecinos) {
+		
+	public void set_vecinos(ArrayList<HashMap<Integer, Double>> _vecinos) {
 		this._vecinos = _vecinos;
 	}
 
@@ -111,16 +117,35 @@ public class GrafoLV {
 	}
 	
 	
-//	QUITAR
-//	public static void main(String[] args) {
-//		GrafoLV g = new GrafoLV(5);
-//		g.agregarArista(0, 1, 5);
-//		g.agregarArista(0, 2, 4);
-//		g.agregarArista(3, 1, 4);
-//		g.agregarArista(3, 2, 4);
+	
+@Override
+	public String toString() {
+	StringBuilder s= new StringBuilder();
+	for(int i=0; i<_vecinos.size();i++) {
+		s.append("vértice : ");
+		s.append(i);
+		s.append(", vecinos: ");
+		s.append(_vecinos.get(i).toString());
+		s.append("\n");
+	}
+		return s.toString();
+	}
+
+	//	QUITAR
+	public static void main(String[] args) {
+		GrafoLV g = new GrafoLV(5);
+		g.agregarArista(0, 1, 5);
+		g.agregarArista(0, 2, 4);
+		g.agregarArista(3, 1, 4);
+		g.agregarArista(3, 1, 3);
+//		g.agregarArista(1, 1, 10);
+		System.out.println(g.toString());
 //		g.eliminarArista(1, 3);
+//		System.out.println(g.toString());
+		g.modificarCarga(3, 1, 5);
+		System.out.println(g.toString());
 //		System.out.println(g.grado(1));
-//
-//	}
+
+	}
 
 }

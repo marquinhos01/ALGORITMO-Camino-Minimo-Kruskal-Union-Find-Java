@@ -39,10 +39,22 @@ public class Arista {
 		Arista other = (Arista) obj;
 		return i == other.i && j == other.j;
 	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Arista [i=" + i + ", j=" + j + ", peso=" + peso + "]";
+	}
+
 	public static void main(String[] args) {
 		Arista n = new Arista(1,2,3);
 		
 		Arista n2 = new Arista(2,1,3);
+		
+		Arista n3 = new Arista(1,2, 4);
+		
+		System.out.println(n.equals(n3));
 		
 	}
 }
