@@ -38,7 +38,7 @@ public class Arista {
 		if (getClass() != obj.getClass())
 			return false;
 		Arista other = (Arista) obj;
-		return i == other.i && j == other.j;
+		return (i == other.i && j == other.j) || (i == other.j && j == other.i);
 	}
 	
 	
@@ -55,7 +55,9 @@ public class Arista {
 		
 		Arista n3 = new Arista(1,2, 4);
 		
-		System.out.println(n.equals(n3));
+		Arista n4 = new Arista(5,2, 4);
+		
+		System.out.println(n.equals(n4));
 		
 	}
 }

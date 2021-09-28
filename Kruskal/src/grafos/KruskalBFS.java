@@ -15,36 +15,26 @@ public class KruskalBFS {
 	}
 	
 	
-	public void iniciarKruskal() {
-		GrafoLV grafoMenor=new GrafoLV(0);
-		//ArrayList _vecinos = new ArrayList<ArrayList<Arista>>();
+	public GrafoLV iniciarKruskal() {
+		GrafoLV arbolGeneradorMinimo=new GrafoLV(0);
+		HashSet<Arista> aristasVisitadas=new HashSet<Arista>();
 		int i = 1;
 		while (i<=(_grafo.vertices()-1)){
 			//buscarMenorPeso
-			Arista aux = buscarMenorPeso();
-			grafoMenor.agregarArista(aux.getI(), aux.getJ(), aux.getPeso());
-			//Comprobar que no haya circuito. Llamamos BFS
-			if(BFS.esConexo(grafoMenor)) {
-				grafoMenor.eliminarArista(aux.getI(), aux.getJ());
+			Arista aristaMinima = buscarMenorPeso();
+			//IF agregar a la coleccion aux MAP
+			if (aristasVisitadas.contains(aristaMinima)) {
+				//IF Comprobar que no haya circuito. Llamamos BFS
+				
+				//Agregar al Arbol Generador Minimo
+				arbolGeneradorMinimo.agregarArista(aristaMinima.getI(), aristaMinima.getJ(), aristaMinima.getPeso());
+				//Marcar arista de menor peso
+				aristasVisitadas.add(aristaMinima);
 			}
-			//Marcar arista de menor peso
-			
-			
 			i++;
 		}
-		
-		//return GrafoLV menor recorrido;
+		return arbolGeneradorMinimo;
 	}
-
-//	private Arista buscarMenorPeso() {
-//		Arista aux = _grafo.getVecinos().get(0).get(0);
-//		//Recorrer aristas y elegir la de menor peso
-//		for (int j = 0; j < _grafo.getVecinos().size(); j++)
-//			for (int k = 0; k < _grafo.getVecinos().get(j).size(); k++)
-//				if (aux.getPeso()>_grafo.getVecinos().get(j).get(k).getPeso())
-//					aux=_grafo.getVecinos().get(j).get(k);
-//		return aux;
-//	}
 	
 	//Devuelve la arista con menor peso del grafo
 	private Arista buscarMenorPeso() {
