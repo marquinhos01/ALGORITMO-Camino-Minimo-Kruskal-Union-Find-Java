@@ -42,9 +42,7 @@ public class BFS {
 			if (marcados[vecinoActual.getKey()] == false && L.contains(vecinoActual.getKey()) == false)
 				L.add(vecinoActual.getKey());
 		}
-//		for (int vertice : g.vecinos(i))
-//			if (marcados[vertice] == false && L.contains(vertice) == false)
-//				L.add(vertice); //lo agrego a L
+
 	}
 
 	private static void inicializar(GrafoLV g, int origen) {

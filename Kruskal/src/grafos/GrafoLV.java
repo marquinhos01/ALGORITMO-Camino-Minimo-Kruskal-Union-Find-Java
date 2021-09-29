@@ -2,23 +2,21 @@ package grafos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-/*
-  Representacin con Lista de vecinos
-*/
 public class GrafoLV {
-	private ArrayList<HashMap<Integer, Double>> _vecinos; // la carga va de 0 a 1 con distribución uniforme
+	private ArrayList<HashMap<Integer, Double>> _vecinos;
 	private ArrayList<Arista> aristas;
 	private int _vertice;
+	private int cantAristas;
+	private int pesoTotal;
 
 	public GrafoLV(int vertices) {
 		_vecinos = new ArrayList<HashMap<Integer, Double>>(vertices);
 		aristas = new ArrayList<Arista>();
 		for (int i = 0; i < vertices; i++)
 			_vecinos.add(new HashMap<Integer, Double>());
-
 		_vertice = vertices;
 	}
 
@@ -34,42 +32,37 @@ public class GrafoLV {
 		return aux;
 	}
 
-	private Arista clonar(Arista arista) {
-		Arista ret = new Arista(arista.getI(), arista.getJ(), arista.getPeso());
-		// TODO Auto-generated method stub
-		return ret;
-	}
-
 	public void agregarArista(int i, int j, double p) {
 		verificarArista(i, j, "agregar");
-
 		if (!_vecinos.get(i).containsKey(j) && !_vecinos.get(j).containsKey(i)) {
 			Arista a = new Arista(i, j, p);
 			_vecinos.get(i).put(j, p);
 			_vecinos.get(j).put(i, p);
 			aristas.add(a);
+			cantAristas++;
+			pesoTotal += p;
 		}
-
 	}
 
 	public void eliminarArista(int i, int j) {
 		verificarArista(i, j, "eliminar");
-
 		if (_vecinos.get(i).containsKey(j) || _vecinos.get(j).containsKey(i)) {
+			pesoTotal -= _vecinos.get(i).get(j);
 			_vecinos.get(i).remove(j);
 			_vecinos.get(j).remove(i);
 			aristas.remove(new Arista(i, j, 0));
+			cantAristas--;
 		}
 	}
 
-	public void modificarCarga(int i, int j, double p) {
-		if (_vecinos.get(i).get(j) == null)
-			throw new IllegalArgumentException("La arista ingresada no existe");
-		if (_vecinos.get(i).containsKey(j) && _vecinos.get(j).containsKey(i) && _vecinos.get(i).get(j) != null) {
-			_vecinos.get(i).replace(j, p);
-			_vecinos.get(j).replace(i, p);
-		}
-	}
+//	public void modificarCarga(int i, int j, double p) {
+//		if (_vecinos.get(i).get(j) == null)
+//			throw new IllegalArgumentException("La arista ingresada no existe");
+//		if (_vecinos.get(i).containsKey(j) && _vecinos.get(j).containsKey(i) && _vecinos.get(i).get(j) != null) {
+//			_vecinos.get(i).replace(j, p);
+//			_vecinos.get(j).replace(i, p);
+//		}
+//	}
 
 	public ArrayList<Arista> getAristas() {
 		return aristas;
@@ -78,6 +71,10 @@ public class GrafoLV {
 	public boolean existeArista(int i, int j) {
 		verificarArista(i, j, "consultar");
 		return _vecinos.get(i).containsKey(j);
+	}
+
+	public int getCantAristas() {
+		return cantAristas;
 	}
 
 	public HashMap<Integer, Double> vecinos(int i) {
@@ -90,19 +87,8 @@ public class GrafoLV {
 		return _vecinos.get(i).size();
 	}
 
-	private void verificarArista(int i, int j, String tipo) {
-		if (i == j)
-			throw new IllegalArgumentException("Se intento " + tipo + " una arista con i=j : " + i + "/" + j);
-
-		verificarVertice(i, tipo);
-
-		verificarVertice(j, tipo);
-
-	}
-
-	private void verificarVertice(int i, String tipo) {
-		if (i < 0 || i >= _vertice)
-			throw new IllegalArgumentException("Se intento usar " + tipo + " con valores, fuera de rango: " + i);
+	public double getPesoTotal() {
+		return pesoTotal;
 	}
 
 	public int vertices() {
@@ -115,6 +101,20 @@ public class GrafoLV {
 		return -1;
 	}
 
+	public boolean esArbol() {
+		boolean conexo = BFS.esConexo(this);
+		boolean sinCircuitos = (this.getCantAristas() < this.vertices());
+		return conexo && sinCircuitos;
+	}
+
+	public boolean esArbolDeMiGrafo(GrafoLV g) {
+		return g.esArbol() && (_vertice == g._vertice) && (g.cantAristas == _vertice - 1);
+	}
+
+	public boolean generaCircuito(int i, int j) {
+		Set<Integer> alcanzables = BFS.alcanzables(this, i); // me dice que genera circuito si ya existe la (i,j)
+		return alcanzables.contains(j);
+	}
 	// para acceder desde KruskalBFS al map con vecinos de un vértice determinado
 
 	public HashMap<Integer, Double> susVecinos(int vertice) {
@@ -126,35 +126,28 @@ public class GrafoLV {
 		return _vecinos;
 	}
 
-	public void set_vecinos(ArrayList<HashMap<Integer, Double>> _vecinos) {
-		this._vecinos = _vecinos;
+//	public void set_vecinos(ArrayList<HashMap<Integer, Double>> _vecinos) {
+//		this._vecinos = _vecinos;
+//	}
+
+	private void verificarArista(int i, int j, String tipo) {
+		if (i == j)
+			throw new IllegalArgumentException("Se intento " + tipo + " una arista con i=j : " + i + "/" + j);
+
+		verificarVertice(i, tipo);
+
+		verificarVertice(j, tipo);
 	}
 
-	public boolean esClique(Set<Integer> conjunto) {
-		if (conjunto == null)
-			throw new IllegalArgumentException("El conjunto no puede ser null");
-
-		for (int v : conjunto)
-			verificarVertice(v, " Clique");
-
-		if (conjunto.isEmpty())
-			return true;
-
-		for (int v : conjunto)
-			for (int otro : conjunto)
-				if (v != otro)
-					if (existeArista(v, otro) == false)
-						return false;
-
-		return true;
+	private void verificarVertice(int i, String tipo) {
+		if (i < 0 || i >= _vertice)
+			throw new IllegalArgumentException("Se intento usar " + tipo + " con valores, fuera de rango: " + i);
 	}
 
-	public boolean generaCircuito(int i, int j) {
-		Set<Integer> alcanzables = BFS.alcanzables(this, i); // me dice que genera circuito si ya existe la (i,j)
-		return alcanzables.contains(j);
+	private Arista clonar(Arista arista) {
+		Arista ret = new Arista(arista.getI(), arista.getJ(), arista.getPeso());
+		return ret;
 	}
-	// arista mas barata de las disponibles, cuando devuelve una la elimina del
-	// grafo
 
 	@Override
 	public String toString() {
@@ -169,9 +162,26 @@ public class GrafoLV {
 		return s.toString();
 	}
 
-	// QUITAR
+	@Override
+	public int hashCode() {
+		return Objects.hash(aristas);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GrafoLV other = (GrafoLV) obj;
+		return Objects.equals(aristas, other.aristas);
+	}
+
+	
 	public static void main(String[] args) {
-		GrafoLV g = new GrafoLV(5);
+
 //		g.agregarArista(0, 1, 4);
 //		g.agregarArista(0, 2, 8);
 //		g.agregarArista(1, 2, 12);
@@ -186,12 +196,22 @@ public class GrafoLV {
 //		g.agregarArista(6, 7, 13);
 //		g.agregarArista(6, 8, 9);
 //		g.agregarArista(8, 7, 10);
-
+		GrafoLV g = new GrafoLV(4);
 		g.agregarArista(0, 1, 10);
 		g.agregarArista(2, 1, 4);
-		g.agregarArista(3, 4, 1);
-		System.out.println(g.getAristas());
-		System.out.println(g.menorPeso());
+		g.agregarArista(3, 1, 1);
+		g.agregarArista(3, 2, 0);
+
+		System.out.println(g.esArbol());
+		KruskalBFS t = new KruskalBFS(g);
+		GrafoLV arbol = t.arbolNuevo;
+		System.out.println(g.esArbolDeMiGrafo(arbol));
+
+//		GrafoLV g2 = new GrafoLV(5);
+//		g2.agregarArista(0, 1, 10);
+//		g2.agregarArista(2, 1, 4);
+//		g2.agregarArista(3, 4, 1);
+//		System.out.println(g.equals(g2));
 
 	}
 
