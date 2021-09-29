@@ -2,6 +2,7 @@ package grafos;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,16 @@ public class GrafoLVTest {
 		grafo.agregarArista(1, 3, 1);
 		grafo.agregarArista(0, 4, 0);
 		return grafo;
+	}	@Test
+	public void vecinosYeliminarTest() {
+		GrafoLV g = inicializarGrafo();
+		HashMap<Integer, Double> vecinos = new HashMap<Integer, Double>();
+		vecinos.put(2,10.0);
+		//1 -> 2, 3 (vecinos de 1)
+		g.eliminarArista(3, 1);
+		//1 -> 2 (vecinos de 1)
+		//hashmap vecinos solo tiene el 2
+		assertEquals(g.vecinos(1), vecinos);
 	}
 
 	@Test
@@ -35,22 +46,14 @@ public class GrafoLVTest {
 		GrafoLV g = inicializarGrafo();
 		assertEquals(5, g.vertices());
 	}
-	@Test
-	public void vecinosTest() {
-		GrafoLV g = inicializarGrafo();
-		Set<Integer> vecinos = new HashSet<Integer>();
-		vecinos.add(2);
-		vecinos.add(3);
-		assertEquals(g.vecinos(1), vecinos);
-	}
-	@Test
-	public void vecinosYeliminarTest() {
-		GrafoLV g = inicializarGrafo();
-		Set<Integer> vecinos = new HashSet<Integer>();
-		vecinos.add(3);
-		g.eliminarArista(2, 1);
-		assertEquals(g.vecinos(1), vecinos);
-	}
+	public void vecinosTest() { 
+		  GrafoLV g = inicializarGrafo(); 
+		  HashMap<Integer, Double> vecinos = new HashMap<Integer, Double>(); 
+		  vecinos.put(2,10.0); 
+		  vecinos.put(3,1.0); 
+		  assertEquals(g.vecinos(1), vecinos); 
+		 }
+
 	@Test
 	public void gradoTest() {
 		GrafoLV g = inicializarGrafo();
@@ -61,10 +64,10 @@ public class GrafoLVTest {
 	@Test
 	public void pesoArista() {
 		GrafoLV g = inicializarGrafo();
-		assertEquals(g.getPesoArista(1, 2), 10);
-		assertEquals(g.getPesoArista(2, 1), 10);
-		assertEquals(g.getPesoArista(4, 0), 0);
-		assertEquals(g.getPesoArista(3, 4), -1); // no son vecinos
+		assertEquals((int)g.getPesoArista(1, 2), 10);
+		assertEquals((int)g.getPesoArista(2, 1), 10);
+		assertEquals((int)g.getPesoArista(4, 0), 0);
+		assertEquals((int)g.getPesoArista(3, 4), -1); // no son vecinos
 	}
 	
 
