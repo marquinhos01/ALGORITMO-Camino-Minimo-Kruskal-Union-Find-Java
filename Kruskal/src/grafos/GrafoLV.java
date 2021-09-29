@@ -2,6 +2,7 @@ package grafos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -9,7 +10,7 @@ import java.util.Set;
 */
 public class GrafoLV {
 	private ArrayList<HashMap<Integer, Double>> _vecinos; // la carga va de 0 a 1 con distribución uniforme
-	private ArrayList<Arista>aristas;
+	private ArrayList<Arista> aristas;
 	private int _vertice;
 
 	public GrafoLV(int vertices) {
@@ -20,23 +21,30 @@ public class GrafoLV {
 
 		_vertice = vertices;
 	}
-	public Arista menorPeso()
-	{
-		Arista aux = new Arista(0,0,0);
+
+	public Arista menorPeso() {
+		Arista aux = clonar(aristas.get(0));
 		double menor = aux.getPeso();
-		for (int i = 0; i < aristas.size(); i++) {
-			if(aristas.get(i).getPeso() < menor)
-				aux = new Arista(aristas.get(i).getI(), aristas.get(i).getJ(), aristas.get(i).getPeso());
-				menor = aristas.get(i).getPeso();
+		for (Arista i : aristas) {
+			if (i.getPeso() < menor)
+				aux = clonar(i);
+			menor = aux.getPeso();
 		}
 		aristas.remove(aux);
 		return aux;
 	}
+
+	private Arista clonar(Arista arista) {
+		Arista ret = new Arista(arista.getI(), arista.getJ(), arista.getPeso());
+		// TODO Auto-generated method stub
+		return ret;
+	}
+
 	public void agregarArista(int i, int j, double p) {
 		verificarArista(i, j, "agregar");
 
 		if (!_vecinos.get(i).containsKey(j) && !_vecinos.get(j).containsKey(i)) {
-			Arista a = new Arista(i,j,p);
+			Arista a = new Arista(i, j, p);
 			_vecinos.get(i).put(j, p);
 			_vecinos.get(j).put(i, p);
 			aristas.add(a);
@@ -50,7 +58,7 @@ public class GrafoLV {
 		if (_vecinos.get(i).containsKey(j) || _vecinos.get(j).containsKey(i)) {
 			_vecinos.get(i).remove(j);
 			_vecinos.get(j).remove(i);
-			aristas.remove(new Arista(i,j,0));
+			aristas.remove(new Arista(i, j, 0));
 		}
 	}
 
@@ -63,9 +71,10 @@ public class GrafoLV {
 		}
 	}
 
-	public ArrayList<Arista>getAristas() {
+	public ArrayList<Arista> getAristas() {
 		return aristas;
 	}
+
 	public boolean existeArista(int i, int j) {
 		verificarArista(i, j, "consultar");
 		return _vecinos.get(i).containsKey(j);
@@ -139,13 +148,14 @@ public class GrafoLV {
 
 		return true;
 	}
+
 	public boolean generaCircuito(int i, int j) {
-		Set<Integer>alcanzables = BFS.alcanzables(this, i); //me dice que genera circuito si ya existe la (i,j)
+		Set<Integer> alcanzables = BFS.alcanzables(this, i); // me dice que genera circuito si ya existe la (i,j)
 		return alcanzables.contains(j);
 	}
-	//arista mas barata de las disponibles, cuando devuelve una la elimina del grafo
-	
-	
+	// arista mas barata de las disponibles, cuando devuelve una la elimina del
+	// grafo
+
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -180,11 +190,9 @@ public class GrafoLV {
 		g.agregarArista(0, 1, 10);
 		g.agregarArista(2, 1, 4);
 		g.agregarArista(3, 4, 1);
-		System.out.println(BFS.alcanzables(g, 3));
 		System.out.println(g.getAristas());
 		System.out.println(g.menorPeso());
-		System.out.println(g.getAristas());
-		System.out.println(g.menorPeso());
+
 	}
 
 }
