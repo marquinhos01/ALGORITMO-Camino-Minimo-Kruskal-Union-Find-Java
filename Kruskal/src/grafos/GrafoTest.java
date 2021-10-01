@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-public class GrafoLVTest {
+public class GrafoTest {
 
-	public GrafoLV inicializarGrafo() {
-		GrafoLV grafo = new GrafoLV(5);
+	public Grafo inicializarGrafo() {
+		Grafo grafo = new Grafo(5);
 		grafo.agregarArista(1, 2, 10);
 		grafo.agregarArista(1, 3, 1);
 		grafo.agregarArista(0, 4, 0);
@@ -19,20 +19,20 @@ public class GrafoLVTest {
 
 	@Test
 	public void NoEsArbol() {
-		GrafoLV g = inicializarGrafo();// no tiene ciclos, pero no es conexo
+		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
 		assertFalse(g.esArbol());
 	}
 
 	@Test
 	public void esArbol() {
-		GrafoLV g = inicializarGrafo();// no tiene ciclos, pero no es conexo
+		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
 		g.agregarArista(0, 1, 0); // lo hago conexo y no tiene ciclo
 		assertTrue(g.esArbol());
 	}
 
 	@Test
 	public void generaCircuito() {
-		GrafoLV g = inicializarGrafo();// no tiene ciclos, pero no es conexo
+		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
 		// la arista (3, 2)generaria un ciclo
 		assertTrue(g.generaCircuito(3, 2));
 		assertTrue(g.generaCircuito(1, 2)); // ERROR!!!!! LA MISMA ARISTA DICE QUE GENERA CIRCUITO
@@ -40,7 +40,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void esArbol2() {
-		GrafoLV arbol = new GrafoLV(4);
+		Grafo arbol = new Grafo(4);
 		arbol.agregarArista(0, 1, 10);
 		arbol.agregarArista(1, 3, 1);
 		arbol.agregarArista(2, 3, 0);
@@ -51,12 +51,12 @@ public class GrafoLVTest {
 
 	@Test
 	public void unGrafoEsMiArbol() {
-		GrafoLV g = inicializarGrafo(); // no es un arbol
+		Grafo g = inicializarGrafo(); // no es un arbol
 		g.agregarArista(0, 1, 0); // lo hago conexo
 		g.agregarArista(2, 3, 0); // 1erciclo
 		g.agregarArista(4, 2, 0); // 2do ciclo
 		assertFalse(g.esArbol());
-		GrafoLV arbol = inicializarGrafo();
+		Grafo arbol = inicializarGrafo();
 		arbol.agregarArista(0, 1, 0);// lo hago conexo
 		arbol.eliminarArista(2, 3); // elimino 1er ciclo
 		arbol.eliminarArista(4, 2); // elimino 2do ciclo
@@ -65,7 +65,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void aristaMenorPeso() {
-		GrafoLV g = inicializarGrafo(); // no es un arbol
+		Grafo g = inicializarGrafo(); // no es un arbol
 		Arista n = new Arista(0, 4, 3);
 		assertEquals(g.menorPeso(), n);
 	}
@@ -83,7 +83,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void agregarAristaTest() {
-		GrafoLV g = new GrafoLV(3);
+		Grafo g = new Grafo(3);
 		g.agregarArista(1, 2, 0);
 		assertTrue(g.existeArista(1, 2));
 		assertTrue(g.existeArista(2, 1));
@@ -92,7 +92,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void getAristas() {
-		GrafoLV g = new GrafoLV(3);
+		Grafo g = new Grafo(3);
 		ArrayList<Arista> aristas = new ArrayList<Arista>();
 		assertEquals(g.getAristas(), aristas);
 		g.agregarArista(1, 2, 10.0);
@@ -105,7 +105,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void getCantAristas() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		int cant = g.getCantAristas();
 		assertEquals(3, cant);
 		g.eliminarArista(0, 4);
@@ -115,18 +115,18 @@ public class GrafoLVTest {
 
 	@Test
 	public void grafoVacioSinVerticeTest() {
-		GrafoLV g = new GrafoLV(0);
+		Grafo g = new Grafo(0);
 		assertEquals(0, g.vertices());
 	}
 
 	@Test
 	public void VerticesTest() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		assertEquals(5, g.vertices());
 	}
 
 	public void vecinosTest() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		HashMap<Integer, Double> vecinos = new HashMap<Integer, Double>();
 		vecinos.put(2, 10.0);
 		vecinos.put(3, 1.0);
@@ -135,7 +135,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void gradoTest() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		assertEquals(g.grado(4), 1); // 0
 		assertEquals(g.grado(0), 1); // 4
 		assertNotEquals(g.grado(1), 3); // 2,3
@@ -143,7 +143,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void pesoTotalGrafo() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		assertEquals((int) g.getPesoTotal(), 11);
 		g.agregarArista(1, 4, 20);
 		assertEquals((int) g.getPesoTotal(), 31);
@@ -153,7 +153,7 @@ public class GrafoLVTest {
 
 	@Test
 	public void pesoArista() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		assertEquals((int) g.getPesoArista(1, 2), 10);
 		assertEquals((int) g.getPesoArista(2, 1), 10);
 		assertEquals((int) g.getPesoArista(4, 0), 0);

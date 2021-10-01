@@ -8,7 +8,7 @@ public class KruskalBFSTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void grafoNoConexoKruskal() {
-		GrafoLV g = new GrafoLV(9);
+		Grafo g = new Grafo(9);
 		g.agregarArista(0, 1, 4);
 		g.agregarArista(0, 2, 8);
 		@SuppressWarnings("unused")
@@ -17,15 +17,15 @@ public class KruskalBFSTest {
 
 	@Test
 	public void esArbolGeneradorMinimo() {
-		GrafoLV G = iniciarGrafo(); //no es un arbol generador
+		Grafo G = iniciarGrafo(); //no es un arbol generador
 		KruskalBFS T = new KruskalBFS(G); 
-		GrafoLV arbolKruskal = T.arbolNuevo; //arbol generador minimo por Kruskal
+		Grafo arbolKruskal = T.arbolNuevo; //arbol generador minimo por Kruskal
 		assertTrue(G.esArbolDeMiGrafo(arbolKruskal));
 	}
 
-	public GrafoLV iniciarGrafo() {
+	public Grafo iniciarGrafo() {
 		// El de la presentación
-		GrafoLV g = new GrafoLV(9);
+		Grafo g = new Grafo(9);
 		g.agregarArista(0, 1, 4);
 		g.agregarArista(0, 2, 8);
 		g.agregarArista(1, 2, 12);
@@ -43,8 +43,8 @@ public class KruskalBFSTest {
 		return g;
 	}
 
-	public GrafoLV arbolDeGrafoInicial() {
-		GrafoLV g = new GrafoLV(9);
+	public Grafo arbolDeGrafoInicial() {
+		Grafo g = new Grafo(9);
 		KruskalBFS k = new KruskalBFS(g);
 		return k.arbolNuevo;
 	}

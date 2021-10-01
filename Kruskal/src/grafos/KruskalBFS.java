@@ -1,9 +1,9 @@
 package grafos;
 
 public class KruskalBFS {
-	private GrafoLV _grafo;
-	public GrafoLV arbolNuevo;
-	public KruskalBFS(GrafoLV grafo) {
+	private Grafo _grafo;
+	public Grafo arbolNuevo;
+	public KruskalBFS(Grafo grafo) {
 		if (!BFS.esConexo(grafo))
 			throw new IllegalArgumentException("El grafo no es conexo");
 		else {
@@ -12,14 +12,15 @@ public class KruskalBFS {
 		}
 	}
 
-	public GrafoLV iniciarKruskal() {
+	public Grafo iniciarKruskal() {
 		
-		GrafoLV arbolGeneradorMinimo = new GrafoLV(_grafo.vertices());
+		Grafo arbolGeneradorMinimo = new Grafo(_grafo.vertices());
 		int i = 1;
 		while (i <= (_grafo.vertices() - 1)) {
 			Arista aristaMinima = _grafo.menorPeso(); //acá estan las aristas del grafo original las voy borrando cada vez que pido un menor
-			System.out.println(i + "" + aristaMinima);
+			//System.out.println(i + "" + aristaMinima);
 			if (!arbolGeneradorMinimo.generaCircuito(aristaMinima.getI(), aristaMinima.getJ())) {
+				//acá hay un bug que funciona, a la vez pregunta si esta o no la arista en arbolGenerador
 				arbolGeneradorMinimo.agregarArista(aristaMinima.getI(), aristaMinima.getJ(), aristaMinima.getPeso());
 				i++;
 			}
@@ -28,7 +29,7 @@ public class KruskalBFS {
 	}
 
 	public static void main(String[] args) {
-		GrafoLV g = new GrafoLV(9);
+		Grafo g = new Grafo(9);
 		
 		g.agregarArista(0, 1, 4);
 		g.agregarArista(0, 7, 8);

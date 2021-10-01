@@ -15,13 +15,13 @@ public class BFStest {
 	
 	@Test
 	public void vacioTest() {
-		GrafoLV g = new GrafoLV(0);
+		Grafo g = new Grafo(0);
 		assertTrue(BFS.esConexo(g));
 	}
 	
 	@Test
 	public void alcanzableTest() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		Set<Integer>alcanzables = BFS.alcanzables(g,0);
 		int[] esperados = { 0, 1, 2, 3};
 		Assert.iguales(esperados, alcanzables);
@@ -29,19 +29,19 @@ public class BFStest {
 	}
 	@Test
 	public void conexoTest() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		g.agregarArista(3, 4, 10);
 		assertTrue(BFS.esConexo(g));
 	}
 	@Test
 	public void noConexoTest() {
-		GrafoLV g = inicializarGrafo();
+		Grafo g = inicializarGrafo();
 		assertFalse(BFS.esConexo(g));
 		
 	}
 
-	private GrafoLV inicializarGrafo() {
-		GrafoLV grafo = new GrafoLV(5);
+	private Grafo inicializarGrafo() {
+		Grafo grafo = new Grafo(5);
 		grafo.agregarArista(0,1,10);
 		grafo.agregarArista(0,2,10);
 		grafo.agregarArista(2,3,10);

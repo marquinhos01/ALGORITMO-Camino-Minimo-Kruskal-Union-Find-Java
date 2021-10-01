@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-public class GrafoLV {
+public class Grafo {
 	private ArrayList<HashMap<Integer, Double>> _vecinos;
 	private ArrayList<Arista> aristas;
 	private int _vertice;
 	private int cantAristas;
 	private int pesoTotal;
 
-	public GrafoLV(int vertices) {
+	public Grafo(int vertices) {
 		_vecinos = new ArrayList<HashMap<Integer, Double>>(vertices);
 		aristas = new ArrayList<Arista>();
 		for (int i = 0; i < vertices; i++)
@@ -107,7 +107,7 @@ public class GrafoLV {
 		return conexo && sinCircuitos;
 	}
 
-	public boolean esArbolDeMiGrafo(GrafoLV g) {
+	public boolean esArbolDeMiGrafo(Grafo g) {
 		return g.esArbol() && (_vertice == g._vertice) && (g.cantAristas == _vertice - 1);
 	}
 
@@ -175,7 +175,7 @@ public class GrafoLV {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GrafoLV other = (GrafoLV) obj;
+		Grafo other = (Grafo) obj;
 		return Objects.equals(aristas, other.aristas);
 	}
 
@@ -196,7 +196,7 @@ public class GrafoLV {
 //		g.agregarArista(6, 7, 13);
 //		g.agregarArista(6, 8, 9);
 //		g.agregarArista(8, 7, 10);
-		GrafoLV g = new GrafoLV(4);
+		Grafo g = new Grafo(4);
 		g.agregarArista(0, 1, 10);
 		g.agregarArista(2, 1, 4);
 		g.agregarArista(3, 1, 1);
@@ -204,7 +204,7 @@ public class GrafoLV {
 
 		System.out.println(g.esArbol());
 		KruskalBFS t = new KruskalBFS(g);
-		GrafoLV arbol = t.arbolNuevo;
+		Grafo arbol = t.arbolNuevo;
 		System.out.println(g.esArbolDeMiGrafo(arbol));
 
 //		GrafoLV g2 = new GrafoLV(5);
@@ -213,6 +213,10 @@ public class GrafoLV {
 //		g2.agregarArista(3, 4, 1);
 //		System.out.println(g.equals(g2));
 
+	}
+
+	public int tamano() {
+		return _vecinos.size();
 	}
 
 }
