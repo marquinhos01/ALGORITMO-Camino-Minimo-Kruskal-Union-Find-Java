@@ -1,5 +1,7 @@
 package generador;
 
+import java.util.Random;
+
 import grafos.Grafo;
 import maxClique.Solver;
 
@@ -18,11 +20,12 @@ public abstract class Generador {
 		Grafo grafo = new Grafo(n);
 		verificarCantArista(n, m);
 		cantidadAristas = m;
+		Random distribucionUniforme = new Random();
 		for (int i = 0; i < cantidadAristas; i++) {
 			do {
-				pVertice = (int) (Math.random() * n - 1 + 1); // I
-				sVertice = (int) (Math.random() * n - 1 + 1); // J
-				peso = (double) Math.round(Math.random()); // peso
+				pVertice = (int) (Math.random() * n); // I
+				sVertice = (int) (Math.random() * n); // J
+				peso = distribucionUniforme.nextDouble(); // peso
 				System.out.println("(" + pVertice + ", " + sVertice + ")");
 			} while (pVertice == sVertice || grafo.existeArista(pVertice, sVertice));
 			grafo.agregarArista(pVertice, sVertice, peso);
