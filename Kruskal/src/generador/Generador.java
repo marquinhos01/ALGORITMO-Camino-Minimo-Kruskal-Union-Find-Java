@@ -23,7 +23,7 @@ public abstract class Generador {
 				pVertice = (int) (Math.random() * n - 1 + 1); // I
 				sVertice = (int) (Math.random() * n - 1 + 1); // J
 				peso = (double) Math.round(Math.random()); // peso
-				System.out.println( "("+pVertice + ", " + sVertice + ")" );
+				System.out.println("(" + pVertice + ", " + sVertice + ")");
 			} while (pVertice == sVertice || grafo.existeArista(pVertice, sVertice));
 			grafo.agregarArista(pVertice, sVertice, peso);
 		}
@@ -41,15 +41,17 @@ public abstract class Generador {
 
 	public static void main(String[] args) {
 		Grafo g = Generador.grafoGenerico(4, 4);
-		/*Este metodo me puede crear tanto un grafo arbol como un no arbol, si le 
-		 * agrego (4,4) ya no seria un arbol, pero si le agrego (4,3) siendo 4 la cant de vertices y  3 la 
-		 * cantidad de aristas hay mucha probabilidad de que me genere un arbol.
+		/*
+		 * Este metodo me puede crear tanto un grafo arbol como un no arbol, si le
+		 * agrego (4,4) ya no seria un arbol, pero si le agrego (4,3) siendo 4 la cant
+		 * de vertices y 3 la cantidad de aristas hay mucha probabilidad de que me
+		 * genere un arbol.
 		 */
 		System.out.println(g.getAristas());
 		System.out.println("es arbol?:-----" + g.esArbol());
-		
+
 		System.out.println("------------------");
-		
+
 		Solver s = new Solver(g); // me sirve para ver la maxima clique
 		System.out.println(s.resolver()); // me sirve para ver la maxima clique
 	}
