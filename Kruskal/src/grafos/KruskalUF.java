@@ -7,11 +7,10 @@ public class KruskalUF {
 	private UnionFind UF;
 
 	public KruskalUF(Grafo grafo) {
-			_grafo = grafo;
-			UF = new UnionFind();
-			UF.setArregloVertices(_grafo.vertices());
-		}
-	
+		_grafo = grafo;
+		UF = new UnionFind();
+		UF.setArregloVertices(_grafo.vertices());
+	}
 
 	public Grafo iniciarKruskal() {
 		Grafo arbolMinimo = new Grafo(_grafo.vertices());
@@ -37,7 +36,7 @@ public class KruskalUF {
 		n.agregarArista(3, 4, 1);
 		KruskalUF kUF = new KruskalUF(n);
 //		KruskalBFS kBFS = new KruskalBFS(n);
-		
+
 		System.out.println("---con Union Find----");
 		System.out.println(kUF.iniciarKruskal());
 //		System.out.println("---con BFS----");

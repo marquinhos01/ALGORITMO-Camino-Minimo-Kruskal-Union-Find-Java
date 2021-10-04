@@ -49,8 +49,8 @@ public class Grafo {
 		verificarArista(i, j, "eliminar");
 		if (_vecinos.get(i).containsKey(j) || _vecinos.get(j).containsKey(i)) {
 			pesoTotal -= _vecinos.get(i).get(j);
-			_vecinos.get(i).remove(j); //no debo eliminar de acá
-			_vecinos.get(j).remove(i); //no debo eliminar de acá
+			_vecinos.get(i).remove(j); //no debo elimina de acá
+			_vecinos.get(j).remove(i);
 			aristas.remove(new Arista(i, j, 0));
 			cantAristas--;
 		}
