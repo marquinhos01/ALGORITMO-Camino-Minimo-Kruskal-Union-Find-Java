@@ -2,14 +2,14 @@ package grafos;
 
 public class KruskalBFS {
 	private Grafo _grafo;
-	public Grafo arbolNuevo;
+	Grafo arbolNuevo;
 
 	public KruskalBFS(Grafo grafo) {
 		if (!BFS.esConexo(grafo))
 			throw new IllegalArgumentException("El grafo no es conexo");
 		else {
 			_grafo = grafo;
-//			arbolNuevo = iniciarKruskal();
+			arbolNuevo = iniciarKruskal();
 		}
 	}
 

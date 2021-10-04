@@ -21,6 +21,7 @@ public class Grafo {
 	}
 
 	public Arista menorPeso() {
+		
 		Arista aux = clonar(aristas.get(0));
 		double menor = aux.getPeso();
 		for (Arista i : aristas) {
@@ -48,8 +49,8 @@ public class Grafo {
 		verificarArista(i, j, "eliminar");
 		if (_vecinos.get(i).containsKey(j) || _vecinos.get(j).containsKey(i)) {
 			pesoTotal -= _vecinos.get(i).get(j);
-			_vecinos.get(i).remove(j);
-			_vecinos.get(j).remove(i);
+			_vecinos.get(i).remove(j); //no debo eliminar de acá
+			_vecinos.get(j).remove(i); //no debo eliminar de acá
 			aristas.remove(new Arista(i, j, 0));
 			cantAristas--;
 		}
@@ -218,5 +219,6 @@ public class Grafo {
 	public int tamano() {
 		return _vecinos.size();
 	}
+
 
 }
