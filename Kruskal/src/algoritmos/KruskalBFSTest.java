@@ -1,8 +1,8 @@
-package grafos;
+package algoritmos;
 
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
+import grafos.Grafo;
 
 public class KruskalBFSTest {
 

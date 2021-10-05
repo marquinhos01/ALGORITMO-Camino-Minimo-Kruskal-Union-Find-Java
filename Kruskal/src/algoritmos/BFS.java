@@ -1,10 +1,14 @@
-package grafos;
+package algoritmos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import grafos.Grafo;
+
+
 
 public class BFS {
 

@@ -1,25 +1,32 @@
-package grafos;
+package algoritmos;
 
-import algoritmos.UnionFind;
+import java.util.LinkedList;
+
+import grafos.Arista;
+import grafos.Grafo;
 
 public class KruskalUF {
 	private Grafo _grafo;
 	private UnionFind UF;
+	private LinkedList<Arista> aristas;
 
 	public KruskalUF(Grafo grafo) {
 		_grafo = grafo;
 		UF = new UnionFind();
 		UF.setArregloVertices(_grafo.vertices());
+		aristas=new LinkedList<Arista>();
 	}
 
 	public Grafo iniciarKruskal() {
 		Grafo arbolMinimo = new Grafo(_grafo.vertices());
+		aristas=_grafo.listaMenorPeso();
 		int i = 1;
 		while (i <= (_grafo.vertices() - 1)) {
-			Arista minima = _grafo.menorPeso(); // arista minima O(n)
-			if (!UF.find(minima.getI(), minima.getJ())) { // si no esta en la misma comp conexa
-				arbolMinimo.agregarArista(minima.getI(), minima.getJ(), minima.getPeso());
-				UF.union(minima.getI(), minima.getJ());
+//			Arista minima = _grafo.menorPeso(); // arista minima O(n)
+			if (!UF.find(aristas.getFirst().getI(), aristas.getFirst().getJ())) { // si no esta en la misma comp conexa
+				arbolMinimo.agregarArista(aristas.getFirst().getI(), aristas.getFirst().getJ(), aristas.getFirst().getPeso());
+				UF.union(aristas.getFirst().getI(), aristas.getFirst().getJ());
+				aristas.removeFirst();
 				i++;
 			}
 		}

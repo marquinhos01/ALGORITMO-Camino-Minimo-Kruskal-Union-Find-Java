@@ -1,8 +1,8 @@
 package main;
 
+import algoritmos.KruskalBFS;
 import generador.Generador;
 import grafos.Grafo;
-import grafos.KruskalBFS;
 
 public class TiempoEjecucion {
 	private long inicio, fin, tiempo;
