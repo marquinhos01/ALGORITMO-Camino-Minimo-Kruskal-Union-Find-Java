@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.junit.Test;
 
@@ -66,20 +67,12 @@ public class GrafoTest {
 	@Test
 	public void aristaMenorPeso() {
 		Grafo g = inicializarGrafo(); // no es un arbol
-		Arista n = new Arista(0, 4, 3);
-		assertEquals(g.menorPeso(), n);
+		LinkedList<Arista> aristasMenores = g.listaMenorPeso();
+		Arista n = new Arista(0, 4, 0);
+		assertEquals(aristasMenores.get(0), n);
+		Arista m = new Arista(1, 2, 12111111);
+		assertEquals(aristasMenores.get(aristasMenores.size()-1), m);
 	}
-//	@Test
-//	public void vecinosYeliminarTest() {
-//		GrafoLV g = inicializarGrafo();
-//		HashMap<Integer, Double> vecinos = new HashMap<Integer, Double>();
-//		vecinos.put(2, 10.0);
-//		// 1 -> 2, 3 (vecinos de 1)
-//		g.eliminarArista(3, 1);
-//		// 1 -> 2 (vecinos de 1)
-//		// hashmap vecinos solo tiene el 2
-//		assertEquals(g.vecinos(1), vecinos);
-//	}
 
 	@Test
 	public void agregarAristaTest() {

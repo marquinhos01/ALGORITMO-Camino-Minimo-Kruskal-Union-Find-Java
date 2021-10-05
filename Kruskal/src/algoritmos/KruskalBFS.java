@@ -24,13 +24,12 @@ public class KruskalBFS {
 		Grafo arbolGeneradorMinimo = new Grafo(_grafo.vertices());
 		aristas = _grafo.listaMenorPeso();
 		int i = 1;
-		Arista aux;
-		while (i <= (_grafo.vertices() - 1)) {
-			aux = aristas.getFirst();
-			if (!arbolGeneradorMinimo.generaCircuito(aux.getI(), aux.getJ())) {
-				arbolGeneradorMinimo.agregarArista(aux.getI(), aux.getJ(), aux.getPeso());
+		Arista aMenor;
+		while (i <= (_grafo.vertices() - 1)) { //O(n)
+			aMenor = aristas.getFirst(); //O(1)
+			if (!arbolGeneradorMinimo.generaCircuito(aMenor.getI(), aMenor.getJ())) {
+				arbolGeneradorMinimo.agregarArista(aMenor.getI(), aMenor.getJ(), aMenor.getPeso());
 				aristas.removeFirst();
-				System.out.println(aux);
 				i++;
 			} 
 			else

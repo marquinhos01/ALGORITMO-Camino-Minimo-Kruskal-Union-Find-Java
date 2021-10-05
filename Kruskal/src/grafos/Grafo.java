@@ -8,9 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import algoritmos.BFS;
-import algoritmos.KruskalBFS;
-
-import java.util.List;
+/* Falta: 
+ * Informe
+ * Test UF
+ * Mejorar el diseño
+ */
 
 public class Grafo {
 	private ArrayList<HashMap<Integer, Double>> _vecinos;
@@ -26,29 +28,15 @@ public class Grafo {
 			_vecinos.add(new HashMap<Integer, Double>());
 		_vertice = vertices;
 	}
-
-	public Arista menorPeso() {
-		
-		Arista aux = clonar(aristas.get(0));
-		double menor = aux.getPeso();
-		for (Arista i : aristas) {
-			if (i.getPeso() < menor)
-				aux = clonar(i);
-			menor = aux.getPeso();
-		}
-		aristas.remove(aux);
-		return aux;
-	}
-	
 	
 	//Ordena las aristas en una LinkedList por su peso utilizando megersort, 
 	//que en promedio, tiene complejidad n log(n)
 	public LinkedList<Arista> listaMenorPeso(){
 		LinkedList <Arista> listaOrdenada = new LinkedList<Arista>();
-		for (Arista i : aristas) {
+		for (Arista i : aristas) { //O(n)
 			listaOrdenada.add(i);
 		}
-		Collections.sort(listaOrdenada);
+		Collections.sort(listaOrdenada);//O(n.log n)
 		return listaOrdenada;
 	}
 
@@ -164,10 +152,7 @@ public class Grafo {
 			throw new IllegalArgumentException("Se intento usar " + tipo + " con valores, fuera de rango: " + i);
 	}
 
-	private Arista clonar(Arista arista) {
-		Arista ret = new Arista(arista.getI(), arista.getJ(), arista.getPeso());
-		return ret;
-	}
+
 
 	@Override
 	public String toString() {
@@ -203,50 +188,6 @@ public class Grafo {
 		return _vecinos.size();
 	}
 	
-	public static void main(String[] args) {
-
-//		g.agregarArista(0, 1, 4);
-//		g.agregarArista(0, 2, 8);
-//		g.agregarArista(1, 2, 12);
-//		g.agregarArista(1, 3, 8);
-//		g.agregarArista(2, 5, 1);
-//		g.agregarArista(4, 2, 6);
-//		g.agregarArista(3, 4, 3);
-//		g.agregarArista(3, 7, 4);
-//		g.agregarArista(5, 4, 5);
-//		g.agregarArista(5, 7, 3);
-//		g.agregarArista(3, 6, 6);
-//		g.agregarArista(6, 7, 13);
-//		g.agregarArista(6, 8, 9);
-//		g.agregarArista(8, 7, 10);
-		Grafo g = new Grafo(4);
-		g.agregarArista(0, 1, 10);
-		g.agregarArista(2, 1, 4);
-		g.agregarArista(3, 1, 4);
-		g.agregarArista(3, 2, 0);
-		
-		LinkedList <Arista> listaOrdenada = new LinkedList<Arista>();
-		listaOrdenada = g.listaMenorPeso();
-		
-		for (Arista i : listaOrdenada) {
-			System.out.println(i);
-		}
-
-		System.out.println(g.esArbol());
-		KruskalBFS t = new KruskalBFS(g);
-//		Grafo arbol = t.arbolNuevo;
-//		System.out.println(g.esArbolDeMiGrafo(arbol));
-	
-//		GrafoLV g2 = new GrafoLV(5);
-//		g2.agregarArista(0, 1, 10);
-//		g2.agregarArista(2, 1, 4);
-//		g2.agregarArista(3, 4, 1);
-//		System.out.println(g.equals(g2));
-		
-		
-		
-
-	}
 
 
 }

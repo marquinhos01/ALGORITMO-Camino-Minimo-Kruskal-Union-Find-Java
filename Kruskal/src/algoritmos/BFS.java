@@ -23,11 +23,9 @@ public class BFS {
 		return alcanzables(g, 0).size() == g.vertices();
 	}
 
-	public static Set<Integer> alcanzables(Grafo g, int origen) {
-
+	public static Set<Integer> alcanzables(Grafo g, int origen) { 
 		Set<Integer> ret = new HashSet<Integer>();
 		inicializar(g, origen);
-
 		while (L.size() != 0) { //no haya para procesar
 			int i = L.get(0); //agarro el primero de la lista
 			marcados[i] = true; //lo marco en marcados -> pongo true 
