@@ -1,9 +1,12 @@
 package grafos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
+import java.util.List;
 
 public class Grafo {
 	private ArrayList<HashMap<Integer, Double>> _vecinos;
@@ -31,6 +34,18 @@ public class Grafo {
 		}
 		aristas.remove(aux);
 		return aux;
+	}
+	
+	
+	//Ordena las aristas en una LinkedList por su peso utilizando megersort, 
+	//que en promedio, tiene complejidad n log(n)
+	public static LinkedList<Arista> listaMenorPeso(Grafo grafo){
+		LinkedList <Arista> listaOrdenada = new LinkedList<Arista>();
+		for (Arista i : grafo.getAristas()) {
+			listaOrdenada.add(i);
+		}
+		Collections.sort(listaOrdenada);
+		return listaOrdenada;
 	}
 
 	public void agregarArista(int i, int j, double p) {
@@ -179,7 +194,10 @@ public class Grafo {
 		Grafo other = (Grafo) obj;
 		return Objects.equals(aristas, other.aristas);
 	}
-
+	
+	public int tamano() {
+		return _vecinos.size();
+	}
 	
 	public static void main(String[] args) {
 
@@ -202,22 +220,28 @@ public class Grafo {
 		g.agregarArista(2, 1, 4);
 		g.agregarArista(3, 1, 1);
 		g.agregarArista(3, 2, 0);
+		
+		LinkedList <Arista> listaOrdenada = new LinkedList<Arista>();
+		listaOrdenada = listaMenorPeso(g);
+		
+		for (Arista i : listaOrdenada) {
+			System.out.println(i);
+		}
 
 		System.out.println(g.esArbol());
 		KruskalBFS t = new KruskalBFS(g);
 		Grafo arbol = t.arbolNuevo;
 		System.out.println(g.esArbolDeMiGrafo(arbol));
-
+	
 //		GrafoLV g2 = new GrafoLV(5);
 //		g2.agregarArista(0, 1, 10);
 //		g2.agregarArista(2, 1, 4);
 //		g2.agregarArista(3, 4, 1);
 //		System.out.println(g.equals(g2));
+		
+		
+		
 
-	}
-
-	public int tamano() {
-		return _vecinos.size();
 	}
 
 

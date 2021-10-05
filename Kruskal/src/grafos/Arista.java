@@ -2,7 +2,7 @@ package grafos;
 
 import java.util.Objects;
 
-public class Arista {
+public class Arista implements Comparable<Arista> {
 	private int i, j;
 	private double peso;
 
@@ -44,6 +44,18 @@ public class Arista {
 	@Override
 	public String toString() {
 		return "Arista [i=" + i + ", j=" + j + ", peso=" + peso + "]\n";
+	}
+
+	@Override
+	public int compareTo(Arista a) {
+		int valor = 0;
+		if (a.getPeso()>this.peso)
+			valor = -1;
+		else if (a.getPeso()==this.peso)
+			valor = 0;
+		else if (a.getPeso()<this.peso)
+			valor = 1;
+		return valor;
 	}
 
 }
