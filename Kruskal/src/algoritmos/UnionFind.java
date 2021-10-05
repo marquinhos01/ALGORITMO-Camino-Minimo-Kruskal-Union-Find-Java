@@ -1,12 +1,17 @@
 package algoritmos;
 
+import java.util.ArrayList;
+
 public class UnionFind {
 
 	private int[] arregloVertices;
 
 	private int root(int i) {
-		while (arregloVertices[i] != i)
-			i = arregloVertices[i];
+//		while (arregloVertices[i] != i) {	//vertices recorridos		
+//			i = arregloVertices[i];
+//		}
+		if(arregloVertices[i] != i)
+			arregloVertices[i] = root(arregloVertices[i]);
 		return i;
 	}
 
