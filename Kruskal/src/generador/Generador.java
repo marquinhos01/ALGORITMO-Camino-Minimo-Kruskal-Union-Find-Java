@@ -25,7 +25,6 @@ public abstract class Generador {
 				pVertice = (int) (Math.random() * n); // I
 				sVertice = (int) (Math.random() * n); // J
 				peso = distribucionUniforme.nextDouble(); // peso
-				System.out.println("(" + pVertice + ", " + sVertice + ")");
 			} while (pVertice == sVertice || grafo.existeArista(pVertice, sVertice));
 			grafo.agregarArista(pVertice, sVertice, peso);
 		}

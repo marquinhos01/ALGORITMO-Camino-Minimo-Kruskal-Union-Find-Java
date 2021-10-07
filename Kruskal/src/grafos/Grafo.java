@@ -5,14 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Set;
 
 import algoritmos.BFS;
-/* Falta: 
- * Informe
- * Test UF
- * Mejorar el diseño
- */
+
 
 public class Grafo {
 	private ArrayList<HashMap<Integer, Double>> _vecinos;
@@ -28,15 +23,15 @@ public class Grafo {
 			_vecinos.add(new HashMap<Integer, Double>());
 		_vertice = vertices;
 	}
-	
-	//Ordena las aristas en una LinkedList por su peso utilizando megersort, 
-	//que en promedio, tiene complejidad n log(n)
-	public LinkedList<Arista> listaMenorPeso(){
-		LinkedList <Arista> listaOrdenada = new LinkedList<Arista>();
-		for (Arista i : aristas) { //O(n)
+
+	// Ordena las aristas en una LinkedList por su peso utilizando megersort,
+	// que en promedio, tiene complejidad n log(n)
+	public LinkedList<Arista> listaMenorPeso() {
+		LinkedList<Arista> listaOrdenada = new LinkedList<Arista>();
+		for (Arista i : aristas) { // O(n)
 			listaOrdenada.add(i);
 		}
-		Collections.sort(listaOrdenada);//O(n.log n)
+		Collections.sort(listaOrdenada);// O(n.log n)
 		return listaOrdenada;
 	}
 
@@ -56,21 +51,18 @@ public class Grafo {
 		verificarArista(i, j, "eliminar");
 		if (_vecinos.get(i).containsKey(j) || _vecinos.get(j).containsKey(i)) {
 			pesoTotal -= _vecinos.get(i).get(j);
-			_vecinos.get(i).remove(j); //no debo elimina de acá
+			_vecinos.get(i).remove(j); // no debo elimina de acá
 			_vecinos.get(j).remove(i);
 			aristas.remove(new Arista(i, j, 0));
 			cantAristas--;
 		}
 	}
 
-//	public void modificarCarga(int i, int j, double p) {
-//		if (_vecinos.get(i).get(j) == null)
-//			throw new IllegalArgumentException("La arista ingresada no existe");
-//		if (_vecinos.get(i).containsKey(j) && _vecinos.get(j).containsKey(i) && _vecinos.get(i).get(j) != null) {
-//			_vecinos.get(i).replace(j, p);
-//			_vecinos.get(j).replace(i, p);
-//		}
-//	}
+	public double getPesoArista(int vertice1, int vertice2) {
+		if (_vecinos.get(vertice1).containsKey(vertice2))
+			return _vecinos.get(vertice1).get(vertice2).doubleValue();
+		return -1;
+	}
 
 	public ArrayList<Arista> getAristas() {
 		return aristas;
@@ -103,10 +95,8 @@ public class Grafo {
 		return _vertice;
 	}
 
-	public double getPesoArista(int vertice1, int vertice2) {
-		if (_vecinos.get(vertice1).containsKey(vertice2))
-			return _vecinos.get(vertice1).get(vertice2).doubleValue();
-		return -1;
+	public int tamano() {
+		return _vecinos.size();
 	}
 
 	public boolean esArbol() {
@@ -118,40 +108,6 @@ public class Grafo {
 	public boolean esArbolDeMiGrafo(Grafo g) {
 		return g.esArbol() && (_vertice == g._vertice) && (g.cantAristas == _vertice - 1);
 	}
-
-	public boolean generaCircuito(int i, int j) {
-		Set<Integer> alcanzables = BFS.alcanzables(this, i); // me dice que genera circuito si ya existe la (i,j)
-		return alcanzables.contains(j);
-	}
-	// para acceder desde KruskalBFS al map con vecinos de un vértice determinado
-
-	public HashMap<Integer, Double> susVecinos(int vertice) {
-		this.verificarVertice(vertice, " un vértice"); // preguntar para qué está el tipo
-		return _vecinos.get(vertice);
-	}
-
-	public ArrayList<HashMap<Integer, Double>> getVecinos() {
-		return _vecinos;
-	}
-
-//	public void set_vecinos(ArrayList<HashMap<Integer, Double>> _vecinos) {
-//		this._vecinos = _vecinos;
-//	}
-
-	private void verificarArista(int i, int j, String tipo) {
-		if (i == j)
-			throw new IllegalArgumentException("Se intento " + tipo + " una arista con i=j : " + i + "/" + j);
-
-		verificarVertice(i, tipo);
-
-		verificarVertice(j, tipo);
-	}
-
-	private void verificarVertice(int i, String tipo) {
-		if (i < 0 || i >= _vertice)
-			throw new IllegalArgumentException("Se intento usar " + tipo + " con valores, fuera de rango: " + i);
-	}
-
 
 
 	@Override
@@ -183,11 +139,17 @@ public class Grafo {
 		Grafo other = (Grafo) obj;
 		return Objects.equals(aristas, other.aristas);
 	}
-	
-	public int tamano() {
-		return _vecinos.size();
+	private void verificarArista(int i, int j, String tipo) {
+		if (i == j)
+			throw new IllegalArgumentException("Se intento " + tipo + " una arista con i=j : " + i + "/" + j);
+
+		verificarVertice(i, tipo);
+
+		verificarVertice(j, tipo);
 	}
-	
 
-
+	private void verificarVertice(int i, String tipo) {
+		if (i < 0 || i >= _vertice)
+			throw new IllegalArgumentException("Se intento usar " + tipo + " con valores, fuera de rango: " + i);
+	}
 }

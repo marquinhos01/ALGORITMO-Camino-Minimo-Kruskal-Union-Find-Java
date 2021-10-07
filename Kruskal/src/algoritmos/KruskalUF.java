@@ -20,7 +20,7 @@ public class KruskalUF {
 	public Grafo iniciarKruskal() {
 		Grafo arbolMinimo = new Grafo(_grafo.vertices());
 		aristas = _grafo.listaMenorPeso(); // O(n)
-		int i = 1; // O(1)
+		int i = 1;
 		while (i <= (_grafo.vertices() - 1)) { // O(n)
 			if (!UF.find(aristas.getFirst().getI(), aristas.getFirst().getJ())) { // si no esta en la misma comp conexa
 				arbolMinimo.agregarArista(aristas.getFirst().getI(), aristas.getFirst().getJ(),

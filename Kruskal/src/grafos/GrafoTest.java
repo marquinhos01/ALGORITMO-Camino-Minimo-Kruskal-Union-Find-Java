@@ -32,14 +32,6 @@ public class GrafoTest {
 	}
 
 	@Test
-	public void generaCircuito() {
-		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
-		// la arista (3, 2)generaria un ciclo
-		assertTrue(g.generaCircuito(3, 2));
-		assertTrue(g.generaCircuito(1, 2)); // ERROR!!!!! LA MISMA ARISTA DICE QUE GENERA CIRCUITO
-	}
-
-	@Test
 	public void esArbol2() {
 		Grafo arbol = new Grafo(4);
 		arbol.agregarArista(0, 1, 10);
