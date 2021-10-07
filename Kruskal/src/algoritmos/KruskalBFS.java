@@ -40,19 +40,4 @@ public class KruskalBFS {
 		return arbolGeneradorMinimo;
 	}
 
-	public static void main(String[] args) {
-		Grafo g = new Grafo(5);
-		g.agregarArista(0, 1, 1);
-		g.agregarArista(0, 2, 3);
-		g.agregarArista(0, 4, 0);
-		g.agregarArista(1, 3, 2);
-		g.agregarArista(1, 4, 12);
-		g.agregarArista(2, 3, 4);
-		g.agregarArista(3, 4, 10);
-		KruskalBFS k = new KruskalBFS(g);
-		Grafo kk = k.iniciarKruskal();
-		System.out.println(k.iniciarKruskal());
-		System.out.println(g.esArbolDeMiGrafo(kk));
-
-	}
 }

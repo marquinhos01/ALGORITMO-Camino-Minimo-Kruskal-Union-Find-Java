@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import algoritmos.BFS;
 
-
 public class Grafo {
 	private ArrayList<HashMap<Integer, Double>> _vecinos;
 	private ArrayList<Arista> aristas;
@@ -22,17 +21,6 @@ public class Grafo {
 		for (int i = 0; i < vertices; i++)
 			_vecinos.add(new HashMap<Integer, Double>());
 		_vertice = vertices;
-	}
-
-	// Ordena las aristas en una LinkedList por su peso utilizando megersort,
-	// que en promedio, tiene complejidad n log(n)
-	public LinkedList<Arista> listaMenorPeso() {
-		LinkedList<Arista> listaOrdenada = new LinkedList<Arista>();
-		for (Arista i : aristas) { // O(n)
-			listaOrdenada.add(i);
-		}
-		Collections.sort(listaOrdenada);// O(n.log n)
-		return listaOrdenada;
 	}
 
 	public void agregarArista(int i, int j, double p) {
@@ -58,6 +46,11 @@ public class Grafo {
 		}
 	}
 
+	public boolean existeArista(int i, int j) {
+		verificarArista(i, j, "consultar");
+		return _vecinos.get(i).containsKey(j);
+	}
+
 	public double getPesoArista(int vertice1, int vertice2) {
 		if (_vecinos.get(vertice1).containsKey(vertice2))
 			return _vecinos.get(vertice1).get(vertice2).doubleValue();
@@ -68,27 +61,28 @@ public class Grafo {
 		return aristas;
 	}
 
-	public boolean existeArista(int i, int j) {
-		verificarArista(i, j, "consultar");
-		return _vecinos.get(i).containsKey(j);
-	}
-
 	public int getCantAristas() {
 		return cantAristas;
 	}
 
 	public HashMap<Integer, Double> vecinos(int i) {
 		verificarVertice(i, " un vertice ");
-
 		return _vecinos.get(i);
-	}
-
-	public int grado(int i) {
-		return _vecinos.get(i).size();
 	}
 
 	public double getPesoTotal() {
 		return pesoTotal;
+	}
+
+	// Ordena las aristas en una LinkedList por su peso utilizando megersort,
+	// que en promedio, tiene complejidad n log(n)
+	public LinkedList<Arista> listaMenorPeso() {
+		LinkedList<Arista> listaOrdenada = new LinkedList<Arista>();
+		for (Arista i : aristas) { // O(n)
+			listaOrdenada.add(i);
+		}
+		Collections.sort(listaOrdenada);// O(n.log n)
+		return listaOrdenada;
 	}
 
 	public int vertices() {
@@ -97,6 +91,10 @@ public class Grafo {
 
 	public int tamano() {
 		return _vecinos.size();
+	}
+	
+	public int grado(int i) {
+		return _vecinos.get(i).size();
 	}
 
 	public boolean esArbol() {
@@ -139,12 +137,11 @@ public class Grafo {
 		Grafo other = (Grafo) obj;
 		return Objects.equals(aristas, other.aristas);
 	}
+
 	private void verificarArista(int i, int j, String tipo) {
 		if (i == j)
 			throw new IllegalArgumentException("Se intento " + tipo + " una arista con i=j : " + i + "/" + j);
-
 		verificarVertice(i, tipo);
-
 		verificarVertice(j, tipo);
 	}
 

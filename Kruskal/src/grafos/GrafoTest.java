@@ -17,43 +17,23 @@ public class GrafoTest {
 		grafo.agregarArista(0, 4, 0);
 		return grafo;
 	}
-
+	//eliminar Arista test agregar
 	@Test
-	public void NoEsArbol() {
-		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
-		assertFalse(g.esArbol());
+	public void agregarAristaTest() {
+		Grafo g = new Grafo(3);
+		g.agregarArista(1, 2, 0);
+		assertTrue(g.existeArista(1, 2));
+		assertTrue(g.existeArista(2, 1));
+		assertFalse(g.existeArista(2, 0));
 	}
 
 	@Test
-	public void esArbol() {
-		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
-		g.agregarArista(0, 1, 0); // lo hago conexo y no tiene ciclo
-		assertTrue(g.esArbol());
-	}
-
-	@Test
-	public void esArbol2() {
-		Grafo arbol = new Grafo(4);
-		arbol.agregarArista(0, 1, 10);
-		arbol.agregarArista(1, 3, 1);
-		arbol.agregarArista(2, 3, 0);
-		assertTrue(arbol.esArbol());
-		arbol.agregarArista(2, 1, 0); // Deja de ser arbol (se genera ciclo)
-		assertFalse(arbol.esArbol());
-	}
-
-	@Test
-	public void unGrafoEsMiArbol() {
-		Grafo g = inicializarGrafo(); // no es un arbol
-		g.agregarArista(0, 1, 0); // lo hago conexo
-		g.agregarArista(2, 3, 0); // 1erciclo
-		g.agregarArista(4, 2, 0); // 2do ciclo
-		assertFalse(g.esArbol());
-		Grafo arbol = inicializarGrafo();
-		arbol.agregarArista(0, 1, 0);// lo hago conexo
-		arbol.eliminarArista(2, 3); // elimino 1er ciclo
-		arbol.eliminarArista(4, 2); // elimino 2do ciclo
-		assertTrue(g.esArbolDeMiGrafo(arbol));
+	public void pesoArista() {
+		Grafo g = inicializarGrafo();
+		assertEquals((int) g.getPesoArista(1, 2), 10);
+		assertEquals((int) g.getPesoArista(2, 1), 10);
+		assertEquals((int) g.getPesoArista(4, 0), 0);
+		assertEquals((int) g.getPesoArista(3, 4), -1); // no son vecinos
 	}
 
 	@Test
@@ -64,15 +44,6 @@ public class GrafoTest {
 		assertEquals(aristasMenores.get(0), n);
 		Arista m = new Arista(1, 2, 12111111);
 		assertEquals(aristasMenores.get(aristasMenores.size()-1), m);
-	}
-
-	@Test
-	public void agregarAristaTest() {
-		Grafo g = new Grafo(3);
-		g.agregarArista(1, 2, 0);
-		assertTrue(g.existeArista(1, 2));
-		assertTrue(g.existeArista(2, 1));
-		assertFalse(g.existeArista(2, 0));
 	}
 
 	@Test
@@ -97,7 +68,7 @@ public class GrafoTest {
 		cant = g.getCantAristas();
 		assertEquals(2, cant);
 	}
-
+	
 	@Test
 	public void grafoVacioSinVerticeTest() {
 		Grafo g = new Grafo(0);
@@ -137,12 +108,41 @@ public class GrafoTest {
 	}
 
 	@Test
-	public void pesoArista() {
-		Grafo g = inicializarGrafo();
-		assertEquals((int) g.getPesoArista(1, 2), 10);
-		assertEquals((int) g.getPesoArista(2, 1), 10);
-		assertEquals((int) g.getPesoArista(4, 0), 0);
-		assertEquals((int) g.getPesoArista(3, 4), -1); // no son vecinos
+	public void NoEsArbol() {
+		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
+		assertFalse(g.esArbol());
+	}
+
+	@Test
+	public void esArbol() {
+		Grafo g = inicializarGrafo();// no tiene ciclos, pero no es conexo
+		g.agregarArista(0, 1, 0); // lo hago conexo y no tiene ciclo
+		assertTrue(g.esArbol());
+	}
+
+	@Test
+	public void esArbol2() {
+		Grafo arbol = new Grafo(4);
+		arbol.agregarArista(0, 1, 10);
+		arbol.agregarArista(1, 3, 1);
+		arbol.agregarArista(2, 3, 0);
+		assertTrue(arbol.esArbol());
+		arbol.agregarArista(2, 1, 0); // Deja de ser arbol (se genera ciclo)
+		assertFalse(arbol.esArbol());
+	}
+
+	@Test
+	public void unGrafoEsMiArbol() {
+		Grafo g = inicializarGrafo(); // no es un arbol
+		g.agregarArista(0, 1, 0); // lo hago conexo
+		g.agregarArista(2, 3, 0); // 1erciclo
+		g.agregarArista(4, 2, 0); // 2do ciclo
+		assertFalse(g.esArbol());
+		Grafo arbol = inicializarGrafo();
+		arbol.agregarArista(0, 1, 0);// lo hago conexo
+		arbol.eliminarArista(2, 3); // elimino 1er ciclo
+		arbol.eliminarArista(4, 2); // elimino 2do ciclo
+		assertTrue(g.esArbolDeMiGrafo(arbol));
 	}
 
 }
