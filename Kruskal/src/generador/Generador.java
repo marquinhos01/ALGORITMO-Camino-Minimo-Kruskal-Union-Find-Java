@@ -30,12 +30,26 @@ public abstract class Generador {
 		}
 		return grafo;
 	}
+	
+	public static Grafo grafoConexo(int n) {
+		Grafo grafo = new Grafo(n);
+		cantidadAristas = n * (n - 1) / 2;
+		Random distribucionUniforme = new Random();
+		for (int i = 0; i < cantidadAristas; i++) {
+			do {
+				pVertice = (int) (Math.random() * n); // I
+				sVertice = (int) (Math.random() * n); // J
+				peso = distribucionUniforme.nextDouble(); // peso
+			} while (pVertice == sVertice || grafo.existeArista(pVertice, sVertice));
+			grafo.agregarArista(pVertice, sVertice, peso);
+		}
+		return grafo;
+	}
 
 	static void verificarCantArista(int n, int m) {
 		cantMaxAristas = n * (n - 1) / 2;
-		if (m <= 0)
-			throw new IllegalArgumentException(
-					"La cantidad de aristas del grafo a crear debe ser mayor a 0, ingresó:" + m);
+		if (m < n-1)
+			throw new IllegalArgumentException("n-1");
 		if (m > cantMaxAristas)
 			throw new IllegalArgumentException("La cantidad de aristas debe ser menor o igual a:" + cantMaxAristas);
 	}

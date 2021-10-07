@@ -21,11 +21,12 @@ public class KruskalUF {
 		Grafo arbolMinimo = new Grafo(_grafo.vertices());
 		aristas = _grafo.listaMenorPeso(); // O(n)
 		int i = 1;
+		Arista aMenor;
 		while (i <= (_grafo.vertices() - 1)) { // O(n)
-			if (!UF.find(aristas.getFirst().getI(), aristas.getFirst().getJ())) { // si no esta en la misma comp conexa
-				arbolMinimo.agregarArista(aristas.getFirst().getI(), aristas.getFirst().getJ(),
-						aristas.getFirst().getPeso());
-				UF.union(aristas.getFirst().getI(), aristas.getFirst().getJ());
+			aMenor = aristas.getFirst();
+			if (!UF.find(aMenor.getI(), aMenor.getJ())) { // si no esta en la misma comp conexa
+				arbolMinimo.agregarArista(aMenor.getI(), aMenor.getJ(),aMenor.getPeso());
+				UF.union(aMenor.getI(), aMenor.getJ());
 				aristas.removeFirst();
 				i++;
 			} else
