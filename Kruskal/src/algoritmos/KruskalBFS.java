@@ -8,7 +8,7 @@ import grafos.Grafo;
 
 public class KruskalBFS {
 	private Grafo _grafo;
-	protected Grafo arbolMinimo;
+	private Grafo arbolMinimo;
 	private LinkedList<Arista> aristas;
 
 	public KruskalBFS(Grafo grafo) {
@@ -39,5 +39,9 @@ public class KruskalBFS {
 		}
 		return arbolGeneradorMinimo;
 	}
+
+	public Grafo getArbolMinimo() {
+		return arbolMinimo;
+	}	
 
 }

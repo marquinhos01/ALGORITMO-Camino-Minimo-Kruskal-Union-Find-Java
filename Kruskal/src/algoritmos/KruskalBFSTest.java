@@ -19,7 +19,7 @@ public class KruskalBFSTest {
 	public void esArbolGeneradorMinimo() {
 		Grafo G = iniciarGrafo(); //no es un arbol generador
 		KruskalBFS T = new KruskalBFS(G); 
-		Grafo arbolKruskal = T.arbolMinimo; //arbol generador minimo por Kruskal
+		Grafo arbolKruskal = T.getArbolMinimo(); //arbol generador minimo por Kruskal
 		assertTrue(G.esArbolDeMiGrafo(arbolKruskal));
 	}
 
@@ -46,7 +46,7 @@ public class KruskalBFSTest {
 	public Grafo arbolDeGrafoInicial() {
 		Grafo g = new Grafo(9);
 		KruskalBFS k = new KruskalBFS(g);
-		return k.arbolMinimo;
+		return k.getArbolMinimo();
 	}
 
 }

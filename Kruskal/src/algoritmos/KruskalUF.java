@@ -8,7 +8,6 @@ import grafos.Grafo;
 public class KruskalUF {
 	private Grafo _grafo;
 	private UnionFind UF;
-//	protected Grafo arbolMinimo;
 	private LinkedList<Arista> aristas;
 
 	public KruskalUF(Grafo grafo) {
@@ -19,7 +18,6 @@ public class KruskalUF {
 			_grafo = grafo;
 			UF = new UnionFind();
 			UF.setArregloVertices(_grafo.vertices());
-//			arbolMinimo = iniciarKruskal(); 
 		}
 	}
 
