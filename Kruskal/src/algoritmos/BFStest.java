@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.util.Set;
 
 import org.junit.Test;
-
-import grafos.Assert;
 import grafos.Grafo;
 
 public class BFStest {
@@ -27,7 +25,7 @@ public class BFStest {
 		Grafo g = inicializarGrafo();
 		Set<Integer>alcanzables = BFS.alcanzables(g,0);
 		int[] esperados = { 0, 1, 2, 3};
-		Assert.iguales(esperados, alcanzables);
+		iguales(esperados, alcanzables);
 		
 	}
 	@Test
@@ -49,6 +47,12 @@ public class BFStest {
 		grafo.agregarArista(0,2,10);
 		grafo.agregarArista(2,3,10);
 		return grafo;
+	}
+	
+	public void iguales(int[] esperados, Set<Integer> alcanzables) {
+		assertEquals(esperados.length, alcanzables.size());
+		for (Integer elemento : esperados)
+			assertTrue(alcanzables.contains(elemento));
 	}
 
 }

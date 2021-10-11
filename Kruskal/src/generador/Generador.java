@@ -5,9 +5,6 @@ import java.util.Random;
 import grafos.Grafo;
 
 public abstract class Generador {
-	// yo no quiero que creen un Generador, cada vez que lo llamo me crea un grafo
-	// diferente
-	// Generador.grafoGenerico(n,m) != Generador.grafoGenerico(m,n)
 
 	private static Integer cantMaxAristas;
 	private static int cantidadAristas;
@@ -15,15 +12,15 @@ public abstract class Generador {
 	private static int sVertice;
 	private static double peso;
 
-	public static Grafo grafoGenerico(int n, int m) {
-		Grafo grafo = new Grafo(n);
-		verificarCantArista(n, m);
-		cantidadAristas = m;
+	public static Grafo grafoGenerico(int vertices, int aristas) {
+		Grafo grafo = new Grafo(vertices);
+		verificarCantArista(vertices, aristas);
+		cantidadAristas = aristas;
 		Random distribucionUniforme = new Random();
 		for (int i = 0; i < cantidadAristas; i++) {
 			do {
-				pVertice = (int) (Math.random() * n); // I
-				sVertice = (int) (Math.random() * n); // J
+				pVertice = (int) (Math.random() * vertices); // I
+				sVertice = (int) (Math.random() * vertices); // J
 				peso = distribucionUniforme.nextDouble(); // peso
 			} while (pVertice == sVertice || grafo.existeArista(pVertice, sVertice));
 			grafo.agregarArista(pVertice, sVertice, peso);
@@ -31,14 +28,14 @@ public abstract class Generador {
 		return grafo;
 	}
 	
-	public static Grafo grafoConexo(int n) {
-		Grafo grafo = new Grafo(n);
-		cantidadAristas = n * (n - 1) / 2;
+	public static Grafo grafoConexo(int vertices) {
+		Grafo grafo = new Grafo(vertices);
+		cantidadAristas = vertices * (vertices - 1) / 2;
 		Random distribucionUniforme = new Random();
 		for (int i = 0; i < cantidadAristas; i++) {
 			do {
-				pVertice = (int) (Math.random() * n); // I
-				sVertice = (int) (Math.random() * n); // J
+				pVertice = (int) (Math.random() * vertices); // I
+				sVertice = (int) (Math.random() * vertices); // J
 				peso = distribucionUniforme.nextDouble(); // peso
 			} while (pVertice == sVertice || grafo.existeArista(pVertice, sVertice));
 			grafo.agregarArista(pVertice, sVertice, peso);
@@ -46,11 +43,11 @@ public abstract class Generador {
 		return grafo;
 	}
 
-	static void verificarCantArista(int n, int m) {
-		cantMaxAristas = n * (n - 1) / 2;
-		if (m < n-1)
-			throw new IllegalArgumentException("n-1");
-		if (m > cantMaxAristas)
+	static void verificarCantArista(int vertices, int aristas) {
+		cantMaxAristas = vertices * (vertices - 1) / 2;
+		if (aristas < vertices-1)
+			throw new IllegalArgumentException("Cantidad de aristas < Cantidad de vertices - 1, no puede ser conexo");
+		if (aristas > cantMaxAristas)
 			throw new IllegalArgumentException("La cantidad de aristas debe ser menor o igual a:" + cantMaxAristas);
 	}
 

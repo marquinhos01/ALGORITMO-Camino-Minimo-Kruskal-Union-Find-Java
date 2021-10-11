@@ -11,10 +11,16 @@ public class KruskalUF {
 	private LinkedList<Arista> aristas;
 
 	public KruskalUF(Grafo grafo) {
-		_grafo = grafo;
-		UF = new UnionFind();
-		UF.setArregloVertices(_grafo.vertices());
-		aristas = new LinkedList<Arista>();
+		if (!BFS.esConexo(grafo))
+			throw new IllegalArgumentException("El grafo no es conexo");
+		else {
+			_grafo = grafo;
+			UF = new UnionFind();
+			UF.setArregloVertices(_grafo.vertices());
+			aristas = new LinkedList<Arista>();
+//			#########PREGUNTAR###########
+//			arbolNuevo = iniciarKruskal(); 
+		}
 	}
 
 	public Grafo iniciarKruskal() {
