@@ -24,10 +24,23 @@ public class UnionFindTest {
 		UnionFind UF = new UnionFind();
 		UF.setArregloVertices(g.vertices());
 
+
 		assertFalse(UF.find(2, 0));
 		assertFalse(UF.find(2, 1));
 		assertFalse(UF.find(2, 3));
 	}
+	
+	@Test
+	public void pathCompressionTest() {
+		Grafo g = iniciarGrafo();
+		UnionFind UF = new UnionFind();
+		UF.setArregloVertices(g.vertices());
+		UF.union(2, 1);
+		UF.union(1, 3);
+
+		assertTrue(UF.find(2, 3));
+	}
+	
 	
 	public Grafo iniciarGrafo() {
 		// El de la presentación
