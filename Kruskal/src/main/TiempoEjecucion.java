@@ -46,7 +46,7 @@ public class TiempoEjecucion {
     }
 	
 	public static void main(String[] args) {
-		Grafo g = Generador.grafoConexo(5);
+		Grafo g = Generador.grafoConexo(100);
 		float promedioBFS=0;
 		float promedioUF=0;
 		double[] datosBFS = new double[10];

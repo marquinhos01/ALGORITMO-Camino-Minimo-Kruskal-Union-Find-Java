@@ -8,18 +8,18 @@ import grafos.Grafo;
 public class KruskalUF {
 	private Grafo _grafo;
 	private UnionFind UF;
+//	protected Grafo arbolMinimo;
 	private LinkedList<Arista> aristas;
 
 	public KruskalUF(Grafo grafo) {
 		if (!BFS.esConexo(grafo))
 			throw new IllegalArgumentException("El grafo no es conexo");
 		else {
+			aristas = new LinkedList<Arista>();
 			_grafo = grafo;
 			UF = new UnionFind();
 			UF.setArregloVertices(_grafo.vertices());
-			aristas = new LinkedList<Arista>();
-//			#########PREGUNTAR###########
-//			arbolNuevo = iniciarKruskal(); 
+//			arbolMinimo = iniciarKruskal(); 
 		}
 	}
 
@@ -40,6 +40,10 @@ public class KruskalUF {
 		}
 		return arbolMinimo;
 
+	}
+
+	public UnionFind getUF() {
+		return UF;
 	}
 
 }

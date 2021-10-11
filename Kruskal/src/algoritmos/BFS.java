@@ -9,7 +9,6 @@ import java.util.Set;
 import grafos.Grafo;
 
 
-
 public class BFS {
 
 	private static ArrayList<Integer> L;

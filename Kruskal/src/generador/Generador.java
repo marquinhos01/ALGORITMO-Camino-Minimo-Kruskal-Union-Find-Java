@@ -42,6 +42,30 @@ public abstract class Generador {
 		}
 		return grafo;
 	}
+	
+	public static Grafo grafoEnlazado(int vertices) {
+		  Grafo grafo = new Grafo(vertices);
+		  cantidadAristas = vertices - 1;
+		  Double peso=(double) vertices;
+		  for (int i = 0; i < cantidadAristas; i++) {
+			  grafo.agregarArista(i, i+1, peso);
+			  peso-=1;
+		 
+		  }
+		  return grafo;
+	}
+	
+//	public static Grafo grafoEnlazadoPesoVariado(int vertices) {
+//		  Grafo grafo = new Grafo(vertices);
+//		  cantidadAristas = vertices - 1;
+//		  Random distribucionUniforme = new Random();
+//		  for (int i = 0; i < cantidadAristas; i++) {
+//			  grafo.agregarArista(i, i+1, peso);
+//			  peso = distribucionUniforme.nextDouble(); // peso
+//		 
+//		  }
+//		  return grafo;
+//	}
 
 	static void verificarCantArista(int vertices, int aristas) {
 		cantMaxAristas = vertices * (vertices - 1) / 2;
