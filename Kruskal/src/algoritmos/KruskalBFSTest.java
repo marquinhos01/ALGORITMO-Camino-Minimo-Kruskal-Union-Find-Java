@@ -1,6 +1,6 @@
 package algoritmos;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import grafos.Grafo;
 
@@ -14,7 +14,20 @@ public class KruskalBFSTest {
 		@SuppressWarnings("unused")
 		KruskalBFS k = new KruskalBFS(g);
 	}
-
+	@Test
+	public void casoFeliz() {
+		Grafo g = new Grafo(4);
+		g.agregarArista(0, 1, 10);
+		g.agregarArista(0, 2, 3);
+		g.agregarArista(0, 3, 1);
+		g.agregarArista(1, 2, 7);
+		g.agregarArista(2, 3, 2);
+		KruskalBFS k = new KruskalBFS(g);
+		Grafo arbol = k.iniciarKruskal();
+		assertFalse(arbol.existeArista(2, 0)); //la mas barata pero genera ciclo
+		assertFalse(arbol.existeArista(1, 3)); //la mas pesada
+		assertTrue(arbol.esArbol());
+	}
 	@Test
 	public void esArbolGeneradorMinimo() {
 		Grafo G = iniciarGrafo(); //no es un arbol generador

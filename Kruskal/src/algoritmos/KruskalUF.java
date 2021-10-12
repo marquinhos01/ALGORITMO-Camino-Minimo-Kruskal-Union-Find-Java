@@ -7,18 +7,12 @@ import grafos.Grafo;
 
 public class KruskalUF {
 	private Grafo _grafo;
-	private UnionFind UF;
 	private LinkedList<Arista> aristas;
 
 	public KruskalUF(Grafo grafo) {
-		if (!BFS.esConexo(grafo))
-			throw new IllegalArgumentException("El grafo no es conexo");
-		else {
-			aristas = new LinkedList<Arista>();
-			_grafo = grafo;
-			UF = new UnionFind();
-			UF.setArregloVertices(_grafo.vertices());
-		}
+		aristas = new LinkedList<Arista>();
+		_grafo = grafo;
+		UnionFind.setArregloVertices(_grafo.vertices());
 	}
 
 	public Grafo iniciarKruskal() {
@@ -26,22 +20,23 @@ public class KruskalUF {
 		aristas = _grafo.listaMenorPeso(); // O(n)
 		int i = 1;
 		Arista aMenor;
-		while (i <= (_grafo.vertices() - 1)) { // O(n)
-			aMenor = aristas.getFirst();
-			if (!UF.find(aMenor.getI(), aMenor.getJ())) { // si no esta en la misma comp conexa
-				arbolMinimo.agregarArista(aMenor.getI(), aMenor.getJ(),aMenor.getPeso());
-				UF.union(aMenor.getI(), aMenor.getJ());
-				aristas.removeFirst();
-				i++;
-			} else
-				aristas.removeFirst();
+		try {
+			while (i <= (_grafo.vertices() - 1)) { // O(n)
+				aMenor = aristas.getFirst();
+				if (!UnionFind.find(aMenor.getI(), aMenor.getJ())) { // si no esta en la misma comp conexa
+					arbolMinimo.agregarArista(aMenor.getI(), aMenor.getJ(), aMenor.getPeso());
+					UnionFind.union(aMenor.getI(), aMenor.getJ());
+					aristas.removeFirst();
+					i++;
+				} else
+					aristas.removeFirst();
+			}
+		} catch (Exception e) {
+			throw new IllegalArgumentException("El grafo no era conexo, no pudo devolver un arbol generador minimo");
 		}
+
 		return arbolMinimo;
 
-	}
-
-	public UnionFind getUF() {
-		return UF;
 	}
 
 }
